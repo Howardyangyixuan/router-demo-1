@@ -1,11 +1,8 @@
-window.addEventListener("hashchange", () => {
-
+function Router() {
   console.log(window.location.hash)
-// const number = window.location.hash.toString().split("/")[1]
   const number = window.location.hash.substr(1)
   console.log(number)
-
-// const div = document.getElementById(number)
+  if(number==="")return
   const stage = document.querySelector(`#stage`)
   console.log(stage.children)
   Array.from(stage.children).forEach((item) => {
@@ -19,6 +16,13 @@ window.addEventListener("hashchange", () => {
   if (div) {
     stage.appendChild(div)
     div.style.display = "block"
-
+  } else {
+    const noMatch = document.querySelector(`#NoMatch`)
+    stage.appendChild(noMatch)
+    noMatch.style.display = "block"
   }
-})
+}
+
+
+Router()
+window.addEventListener("hashchange", Router)

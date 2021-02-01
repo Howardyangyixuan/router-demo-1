@@ -118,12 +118,11 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
-window.addEventListener("hashchange", function () {
-  console.log(window.location.hash); // const number = window.location.hash.toString().split("/")[1]
-
+function Router() {
+  console.log(window.location.hash);
   var number = window.location.hash.substr(1);
-  console.log(number); // const div = document.getElementById(number)
-
+  console.log(number);
+  if (number === "") return;
   var stage = document.querySelector("#stage");
   console.log(stage.children);
   Array.from(stage.children).forEach(function (item) {
@@ -139,8 +138,15 @@ window.addEventListener("hashchange", function () {
   if (div) {
     stage.appendChild(div);
     div.style.display = "block";
+  } else {
+    var noMatch = document.querySelector("#NoMatch");
+    stage.appendChild(noMatch);
+    noMatch.style.display = "block";
   }
-});
+}
+
+Router();
+window.addEventListener("hashchange", Router);
 },{}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
