@@ -131,16 +131,15 @@ noMatch.innerHTML = "该页面不存在"; //添加路由表
 var routerHashTable = {
   "1": div1,
   "2": div2,
-  "3": div3,
-  "404": noMatch
+  "3": div3
 };
 
 function Router() {
   //根据hash设置页面
   //设置路由
   var div;
-  console.log(window.location.hash);
-  var number = window.location.hash.substr(1);
+  console.log(window.location.pathname);
+  var number = window.location.pathname.split('/')[1];
   console.log(number); //默认路由
 
   if (number === "") return; //根据路由表配置路由
