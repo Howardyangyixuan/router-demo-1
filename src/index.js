@@ -14,28 +14,39 @@ const routerHashTable = {
   "3": div3,
 }
 
+const links = document.querySelectorAll("a.Link")
+for (let link of links) {
+  link.addEventListener("click", e => {
+    e.preventDefault()
+    console.log(link)
+    const href = link.getAttribute("href")
+    console.log(href)
+    window.history.pushState(null,null, href)
+    Router()
+  })
+}
+
 function Router() {
   //根据hash设置页面
   //设置路由
   let div
   console.log(window.location.pathname)
-  const number = window.location.pathname.split('/')[1]
+  const number = window.location.pathname.split("/")[1]
   console.log(number)
   //默认路由
   if (number === "") return
   //根据路由表配置路由
   div = routerHashTable[number]
   //为空时，为noMatch
-  if(!div){
-    div  = noMatch
+  if (!div) {
+    div = noMatch
   }
   //根据div是否存在进行展示
   const stage = document.querySelector("#stage")
   console.log(stage)
-  stage.innerHTML=""
+  stage.innerHTML = ""
   stage.appendChild(div)
 }
 
 
 Router()
-window.addEventListener("hashchange", Router)

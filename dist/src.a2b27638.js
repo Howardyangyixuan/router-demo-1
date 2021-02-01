@@ -118,6 +118,12 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
+function _createForOfIteratorHelper(o) { if (typeof Symbol === "undefined" || o[Symbol.iterator] == null) { if (Array.isArray(o) || (o = _unsupportedIterableToArray(o))) { var i = 0; var F = function F() {}; return { s: F, n: function n() { if (i >= o.length) return { done: true }; return { done: false, value: o[i++] }; }, e: function e(_e) { throw _e; }, f: F }; } throw new TypeError("Invalid attempt to iterate non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); } var it, normalCompletion = true, didErr = false, err; return { s: function s() { it = o[Symbol.iterator](); }, n: function n() { var step = it.next(); normalCompletion = step.done; return step; }, e: function e(_e2) { didErr = true; err = _e2; }, f: function f() { try { if (!normalCompletion && it.return != null) it.return(); } finally { if (didErr) throw err; } } }; }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
 //将div放在window上，而非隐藏
 var div1 = document.createElement("div");
 div1.innerHTML = "1.hi,我是第一个div";
@@ -133,13 +139,39 @@ var routerHashTable = {
   "2": div2,
   "3": div3
 };
+var links = document.querySelectorAll("a.Link");
+
+var _iterator = _createForOfIteratorHelper(links),
+    _step;
+
+try {
+  var _loop = function _loop() {
+    var link = _step.value;
+    link.addEventListener("click", function (e) {
+      e.preventDefault();
+      console.log(link);
+      var href = link.getAttribute("href");
+      console.log(href);
+      window.history.pushState(null, null, href);
+      Router();
+    });
+  };
+
+  for (_iterator.s(); !(_step = _iterator.n()).done;) {
+    _loop();
+  }
+} catch (err) {
+  _iterator.e(err);
+} finally {
+  _iterator.f();
+}
 
 function Router() {
   //根据hash设置页面
   //设置路由
   var div;
   console.log(window.location.pathname);
-  var number = window.location.pathname.split('/')[1];
+  var number = window.location.pathname.split("/")[1];
   console.log(number); //默认路由
 
   if (number === "") return; //根据路由表配置路由
@@ -158,7 +190,6 @@ function Router() {
 }
 
 Router();
-window.addEventListener("hashchange", Router);
 },{}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
