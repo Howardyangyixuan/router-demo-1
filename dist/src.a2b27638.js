@@ -118,6 +118,23 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
+//将div放在window上，而非隐藏
+var div1 = document.createElement("div");
+div1.innerHTML = "1.hi,我是第一个div";
+var div2 = document.createElement("div");
+div2.innerHTML = "2.hi,我是第一个div";
+var div3 = document.createElement("div");
+div3.innerHTML = "3.hi,我是第一个div";
+var noMatch = document.createElement("div");
+noMatch.innerHTML = "该页面不存在"; //添加路由表
+
+var routerHashTable = {
+  "1": div1,
+  "2": div2,
+  "3": div3,
+  "404": noMatch
+};
+
 function Router() {
   //根据hash设置页面
   //设置路由
@@ -126,41 +143,19 @@ function Router() {
   var number = window.location.hash.substr(1);
   console.log(number); //默认路由
 
-  if (number === "") return; //其他情况下先清空页面
+  if (number === "") return; //根据路由表配置路由
 
-  var stage = document.querySelector("#stage");
-  console.log(stage.children);
-  Array.from(stage.children).forEach(function (item) {
-    var _item$style;
+  div = routerHashTable[number]; //为空时，为noMatch
 
-    console.log(item);
-    if (item === null || item === void 0 ? void 0 : (_item$style = item.style) === null || _item$style === void 0 ? void 0 : _item$style.display) item.style.display = "none";
-    document.body.appendChild(item);
-  }); //添加路由表
-
-  var routerHashTable = {
-    "1": "#div1",
-    "2": "#div2",
-    "3": "#div3"
-  }; //处理DOM查询id可能出现的报错
-
-  try {
-    var query = routerHashTable[number];
-    div = document.querySelector(query);
-    console.log(div);
-  } catch (_unused) {
-    div = null;
+  if (!div) {
+    div = noMatch;
   } //根据div是否存在进行展示
 
 
-  if (div) {
-    stage.appendChild(div);
-    div.style.display = "block";
-  } else {
-    var noMatch = document.querySelector("#NoMatch");
-    stage.appendChild(noMatch);
-    noMatch.style.display = "block";
-  }
+  var stage = document.querySelector("#stage");
+  console.log(stage);
+  stage.innerHTML = "";
+  stage.appendChild(div);
 }
 
 Router();
