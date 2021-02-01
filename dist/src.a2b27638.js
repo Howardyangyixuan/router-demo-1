@@ -118,19 +118,29 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
-console.log(window.location.hash); // const number = window.location.hash.toString().split("/")[1]
+window.addEventListener("hashchange", function () {
+  console.log(window.location.hash); // const number = window.location.hash.toString().split("/")[1]
 
-var number = window.location.hash.substr(1);
-console.log(number); // const div = document.getElementById(number)
+  var number = window.location.hash.substr(1);
+  console.log(number); // const div = document.getElementById(number)
 
-var div = document.querySelector("#div".concat(number));
-console.log(div);
-
-if (div) {
   var stage = document.querySelector("#stage");
-  stage.appendChild(div);
-  div.style.display = "block";
-}
+  console.log(stage.children);
+  Array.from(stage.children).forEach(function (item) {
+    var _item$style;
+
+    console.log(item);
+    if (item === null || item === void 0 ? void 0 : (_item$style = item.style) === null || _item$style === void 0 ? void 0 : _item$style.display) item.style.display = "none";
+    document.body.appendChild(item);
+  });
+  var div = document.querySelector("#div".concat(number));
+  console.log(div);
+
+  if (div) {
+    stage.appendChild(div);
+    div.style.display = "block";
+  }
+});
 },{}],"../../.config/yarn/global/node_modules/parcel/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
