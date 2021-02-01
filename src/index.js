@@ -1,5 +1,13 @@
 function Router() {
-  //清空页面
+  //根据hash设置页面
+  //设置路由
+  let div
+  console.log(window.location.hash)
+  const number = window.location.hash.substr(1)
+  console.log(number)
+  //默认路由
+  if (number === "") return
+  //其他情况下先清空页面
   const stage = document.querySelector(`#stage`)
   console.log(stage.children)
   Array.from(stage.children).forEach((item) => {
@@ -8,17 +16,16 @@ function Router() {
       item.style.display = "none"
     document.body.appendChild(item)
   })
-  //根据hash设置页面
-  //默认路由
-  if (number === "") return
-  //设置路由
-  let div
-  console.log(window.location.hash)
-  const number = window.location.hash.substr(1)
-  console.log(number)
+  //添加路由表
+  const routerHashTable = {
+    "1":"#div1",
+    "2":"#div2",
+    "3":"#div3",
+  }
   //处理DOM查询id可能出现的报错
   try {
-    div = document.querySelector(`#div${number}`)
+    const query = routerHashTable[number]
+    div = document.querySelector(query)
     console.log(div)
   } catch {
     div = null
