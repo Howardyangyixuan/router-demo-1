@@ -135,9 +135,9 @@ var noMatch = document.createElement("div");
 noMatch.innerHTML = "该页面不存在"; //添加路由表
 
 var routerHashTable = {
-  "1": div1,
-  "2": div2,
-  "3": div3
+  "/1": div1,
+  "/2": div2,
+  "/3": div3
 };
 var links = document.querySelectorAll("a.Link");
 
@@ -152,7 +152,7 @@ try {
       console.log(link);
       var href = link.getAttribute("href");
       console.log(href);
-      window.history.pushState(null, null, href);
+      window.localStorage.setItem("route", href);
       Router();
     });
   };
@@ -170,11 +170,10 @@ function Router() {
   //根据hash设置页面
   //设置路由
   var div;
-  console.log(window.location.pathname);
-  var number = window.location.pathname.split("/")[1];
+  var number = window.localStorage.getItem("route");
   console.log(number); //默认路由
 
-  if (number === "") return; //根据路由表配置路由
+  if (number === null) return; //根据路由表配置路由
 
   div = routerHashTable[number]; //为空时，为noMatch
 

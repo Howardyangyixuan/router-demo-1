@@ -9,9 +9,9 @@ const noMatch = document.createElement("div")
 noMatch.innerHTML = "该页面不存在"
 //添加路由表
 const routerHashTable = {
-  "1": div1,
-  "2": div2,
-  "3": div3,
+  "/1": div1,
+  "/2": div2,
+  "/3": div3,
 }
 
 const links = document.querySelectorAll("a.Link")
@@ -21,7 +21,7 @@ for (let link of links) {
     console.log(link)
     const href = link.getAttribute("href")
     console.log(href)
-    window.history.pushState(null,null, href)
+    window.localStorage.setItem("route",href)
     Router()
   })
 }
@@ -30,11 +30,10 @@ function Router() {
   //根据hash设置页面
   //设置路由
   let div
-  console.log(window.location.pathname)
-  const number = window.location.pathname.split("/")[1]
+  const number = window.localStorage.getItem("route")
   console.log(number)
   //默认路由
-  if (number === "") return
+  if (number === null) return
   //根据路由表配置路由
   div = routerHashTable[number]
   //为空时，为noMatch
