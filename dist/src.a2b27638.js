@@ -119,10 +119,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   return newRequire;
 })({"src/index.js":[function(require,module,exports) {
 function Router() {
-  console.log(window.location.hash);
-  var number = window.location.hash.substr(1);
-  console.log(number);
-  if (number === "") return;
+  //清空页面
   var stage = document.querySelector("#stage");
   console.log(stage.children);
   Array.from(stage.children).forEach(function (item) {
@@ -131,9 +128,23 @@ function Router() {
     console.log(item);
     if (item === null || item === void 0 ? void 0 : (_item$style = item.style) === null || _item$style === void 0 ? void 0 : _item$style.display) item.style.display = "none";
     document.body.appendChild(item);
-  });
-  var div = document.querySelector("#div".concat(number));
-  console.log(div);
+  }); //根据hash设置页面
+  //默认路由
+
+  if (number === "") return; //设置路由
+
+  var div;
+  console.log(window.location.hash);
+  var number = window.location.hash.substr(1);
+  console.log(number); //处理DOM查询id可能出现的报错
+
+  try {
+    div = document.querySelector("#div".concat(number));
+    console.log(div);
+  } catch (_unused) {
+    div = null;
+  } //根据div是否存在进行展示
+
 
   if (div) {
     stage.appendChild(div);
